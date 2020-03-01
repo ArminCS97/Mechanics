@@ -1,8 +1,13 @@
+import math
+
 import matplotlib.pyplot as plt
+"""an = ap logically speaking"""
+"""the graphs are drawn for each car"""
+
 
 class Car:
     def __init__(self, v0, an, ap, delta_t, x0, delta_s):
-        self.v0 = float(v0) # initial velocity of the car
+        self.v0 = v0 # initial velocity of the car
         self.an = an # negative acceleration
         self.ap = ap # positive acceleration
         self.delta_T = delta_t  # duration of the yellow light
@@ -27,7 +32,7 @@ class Car:
             print('You can pass easily so accelerate and pass the intersection')
 
         if self.does_it_stop == False and condition == False:
-            print('You cannot pass however, you can be in somewhere in the intersection width')
+            print('You cannot pass however, you can be in somewhere in the intersection width + x0')
             """Considering the fact that we cannot change width of the intersection, duration of yellow light
             consider 2 sub-cases"""
             new_ap = 2 * (self.x0 + self.delta_S + self.v0*self.delta_T) / (self.delta_T**2)
@@ -35,11 +40,19 @@ class Car:
 
             new_v0 = (self.x0 + self.delta_S + 0.5 * ( self.ap * self.delta_T**2) ) / self.delta_T
             print("If your ap is ", self.ap, " Then your initial velocity should have been ", new_v0, " to pass.")
+        print('\n\n')
 
-        print("")
+    def draw_distance_time(self): # these are my assumptions
+        time = [t/10 for t in range(self.delta_T*10, 50, 1)]
+        distance = [self.x0]
+        for t in time:
+            pop = distance.pop()
+            x1 = 0.5 * ( self.ap * t**2) + (self.v0 * t) + pop
+            distance.append(pop)
+            distance.append(x1)
 
-    def draw_distance_time(self, distance, time):
         # plotting the points
+        distance.pop()
         plt.plot(time, distance)
 
         # naming the x axis
@@ -48,12 +61,22 @@ class Car:
         plt.ylabel('distance')
 
         # giving a title to my graph
-        plt.title('distance-time Graph')
+        plt.title('distance > 170 is not accepted')
 
         # function to show the plot
         plt.show()
 
-    def draw_speed_distance(self, speed, distance):
+    def draw_speed_distance(self):
+        speed = []
+        distance = [x/10 for x in range(int(self.x0+self.delta_S)*10, 1700, 1)]
+        speed.append(self.v0)
+        for x in distance:
+            pop = speed.pop()
+            v1 = math.sqrt(2 * x + pop**2)
+            speed.append(pop)
+            speed.append(v1)
+
+        speed.pop()
         # plotting the points
         plt.plot(distance, speed)
 
@@ -69,17 +92,23 @@ class Car:
         plt.show()
 
 
-car1 = Car(v0=20, an=3 , ap=30, delta_t=3, delta_s=10, x0=400/6)
+car1 = Car(v0=20, an=3 , ap=3, delta_t=3, delta_s=10, x0=400/6)
 car1.does_it_stop_()
+car1.draw_distance_time()
+car1.draw_speed_distance()
 
-car2 = Car(v0=20.0, an=4.0 , ap=40.0, delta_t=3, delta_s=10, x0=50.0)
+car2 = Car(v0=20.0, an=3.0 , ap=3, delta_t=3, delta_s=10, x0=50.0)
 car2.does_it_stop_()
 
-car2 = Car(v0=20.0, an=4.0 , ap=40.0, delta_t=3, delta_s=10, x0=55.0)
-car2.does_it_stop_()
+car3 = Car(v0=20.0, an=2 , ap=2, delta_t=3, delta_s=10, x0=55.0)
+car3.does_it_stop_()
 
-car2 = Car(v0=40, an=4.0 , ap=4, delta_t=3, delta_s=10, x0=50)
-car2.does_it_stop_()
+car4 = Car(v0=40, an=4 , ap=4, delta_t=3, delta_s=10, x0=50)
+car4.does_it_stop_()
+
+car5 = Car(v0=27, an=2 , ap=2, delta_t=5, delta_s=10, x0=150)
+car5.does_it_stop_()
+
 
 
 
