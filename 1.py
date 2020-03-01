@@ -127,12 +127,14 @@ car6.does_it_stop_()
 
 """2 cars"""
 
-print("Considering 2 cars ")
+print('\n\n', "Considering 2 cars ", '\n')
 
 
 def two_cars(frontal_car, rear_car, d):
+    print("For frontal_car: ")
     frontal_car.does_it_stop_()
     rear_car.x0 = d + frontal_car.x0
+    print("For rear_car: ")
     rear_car.does_it_stop_()
 
 
