@@ -5,10 +5,12 @@ import matplotlib.pyplot as plt
 """an = ap logically speaking"""
 """the graphs are drawn for each car"""
 """for drawing the graphs the distance is considered as delta_s or delta_s + x0"""
+"""Prt 6 is vague. It has not said clearly whether 2 cars are exactly in a line ,I assume they are"""
+"""No car can stay on the street so we have to pass it completely or stay at distance x0"""
 
 
 class Car:
-    def __init__(self, v0, an, ap, delta_t, x0, delta_s, v_max=None):
+    def __init__(self, v0, an, ap, delta_t, x0, delta_s, v_max=None, condition=None):
         self.v0 = v0  # initial velocity of the car
         self.an = an  # negative acceleration
         self.ap = ap  # positive acceleration
@@ -17,6 +19,7 @@ class Car:
         self.delta_S = delta_s  # width of the intersection
         self.does_it_stop = False
         self.v_max = v_max
+        self.condition = condition
 
     """3 cases may occur and I consider each one of them inside the class"""
     """I: Car has to stop at position of the traffic light
@@ -29,18 +32,18 @@ class Car:
             self.does_it_stop = True
             print("You must stop")
 
-        condition = (self.x0 + self.delta_S) == (0.5 * (self.ap * self.delta_T ** 2) + (self.v0 * self.delta_T))
+        self.condition = (self.x0 + self.delta_S) == (0.5 * (self.ap * self.delta_T ** 2) + (self.v0 * self.delta_T))
         if self.v_max is not None:
             v1 = math.sqrt(2 * (self.x0 + self.delta_S) + self.v0 ** 2)
             if v1 > self.v_max:
                 print("Exceeding the max speed")
                 return
 
-        if self.does_it_stop == False and condition:  # case II
+        if self.does_it_stop == False and self.condition:  # case II
             self.does_it_stop = False
             print('You can pass easily so accelerate and pass the intersection')
 
-        if self.does_it_stop == False and condition == False:
+        if self.does_it_stop == False and self.condition == False:
             print('You cannot pass however, you can be in somewhere in the intersection width + x0')
             """Considering the fact that we cannot change width of the intersection, duration of yellow light
             consider 2 sub-cases"""
@@ -130,12 +133,34 @@ car6.does_it_stop_()
 print('\n\n', "Considering 2 cars ", '\n')
 
 
-def two_cars(frontal_car, rear_car, d):
+def two_cars(frontal_car, rear_car, d):  # car1 is the frontal car, car2 is the rear car
     print("For frontal_car: ")
     frontal_car.does_it_stop_()
     rear_car.x0 = d + frontal_car.x0
     print("For rear_car: ")
     rear_car.does_it_stop_()
 
+    print("Will they crash? ")
+    """2 cars will crash if and only if x1 ( x of car 1) == x2 ( x of car 2)"""
+
+    if frontal_car.does_it_stop:  # If car1 has to stop so does car2 => case I
+        print("rear car has to stop too as frontal car stops")
+
+    crush = 0.5 * frontal_car.ap * frontal_car.delta_T ** 2 + frontal_car.v0 * frontal_car.delta_T + frontal_car.x0 == \
+            0.5 * rear_car.ap * rear_car.delta_T ** 2 + rear_car.v0 * rear_car.delta_T + rear_car.x0
+
+    if frontal_car.does_it_stop is False and rear_car.does_it_stop is False and frontal_car.condition and rear_car.condition \
+            and crush is False: # If car1 can pass the intersection easily, then car1 MAY be able to do so without no
+        # crash => case II
+        print('They will not crash and car2 can accelerate to pass the distance easily')
+    """Considering the case III, it is similar to case I because anyway we have to stop based on my own assumption
+    that no car can stay on the street"""
+    if crush:
+        print("They crush so car2 better not accelerate")
+    else:
+        print("they will not crash")
+    print('\n\n')
+
 
 two_cars(car1, car2, 12)
+two_cars(car3, car5, 12)
