@@ -22,38 +22,45 @@ class Position:
         self.v0 = v0
 
     def calculate_All(self):
+        """These 4 unknowns are the most important ones and solving them can be a breakthrough"""
         F1 = symbols('F1')
         a1 = symbols('a1')
         T = symbols('T')
         a2 = symbols('a2')
 
+        """f1k, f2k and f3k need to be calculated too"""
         f2k = self.s2 * self.M2 * self.g
         f1k = self.s1 * (T + self.M2 * self.g + self.M1 * self.g + self.s3 * F1)
+        f3k = self.s3 * F1
+
+        """Below I have used some helping dummy variables just for the sake of readability"""
         beta = -1 * self.F + f1k
-        alpha = self.s3 * F1 + f2k
+        alpha = f3k + f2k
         theta = self.M1 * self.M2 + 2 * self.M2 * self.M3 + self.M1 * self.M3 + self.M3 ** 2
 
         """Below you can see the codes calculating 4 equations and 4 unknowns"""
         expr1 = (((self.M3 * (beta + self.M2 * self.g)) - self.M2 * (
-                alpha - beta)) / theta) - a1  # VI
-        expr2 = f2k + self.M2 * a2 - T  # I
-        expr3 = -1 * self.M3 * a1 - F1  # II
-        expr4 = ((beta + (self.M1 + self.M3) * a1) / -1 * self.M2) - a2
+                alpha - beta)) / theta) - a1  # based on VI
+        expr2 = f2k + self.M2 * a2 - T  # based on I
+        expr3 = -1 * self.M3 * a1 - F1  # based on II
+        expr4 = ((beta + (self.M1 + self.M3) * a1) / -1 * self.M2) - a2  # based on V
         solve_them = solve([expr1, expr2, expr3, expr4])
+
+        """Now that I have all the 4 important unknowns I use them to calculate other unknowns"""
         all_the_unknowns = {
             'a1': round(solve_them.get(a1, None), 4),
             'F1': round(solve_them.get(F1, None), 4),
             'T': round(solve_them.get(T, None), 4),
             'a2': round(solve_them.get(a2, None), 4),
             'a3x': round(solve_them.get(a1, None), 4),
-            'a37': round(solve_them.get(a1) - solve_them.get(a2), 4)
+            'a3y': round(solve_them.get(a1) - solve_them.get(a2), 4)
         }
         return all_the_unknowns
 
     def calculate_the_x(self):
         a1 = self.calculate_All().get('a1')
         a2 = self.calculate_All().get('a2')
-        a3y = self.calculate_All().get('a37')
+        a3y = self.calculate_All().get('a3y')
         v0 = self.v0
         M1_x1 = 1 / 2 * (a1 * self.t ** 2) + v0 * self.t + self.x0_M1
         M2_x1 = 1 / 2 * (a2 * self.t ** 2) + v0 * self.t + self.x0_M2
