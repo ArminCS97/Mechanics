@@ -5,7 +5,7 @@
 """Some important assumptions:
     0- Let the leftmost uppermost part of each body be C. C is considered for all the 
         x0`s and x1`s.
-    1- H is the vertical distance of M1 hole and is 100 (you can change it if you wish)
+    1- hole_length is the vertical distance of M1 hole and is 1000 (you can change it if you wish)
     2- distance_from_M1_to_M3 variable is for when C of M1 = C of M3 (both C`s are at the same level)
         and my Algorithm considers x0_M3 = distance_from_M1_to_M3 + x0_M1
     3- hole_length shows how far M3 can go down 
@@ -13,7 +13,7 @@
             M3_y1 = -self.hole_length
         it means that when M3 has reached the bottom of M1 hole, it does not go further down     
     5- M3_y1 < 0 as we going downward in the opposite direction of Y axis
-    6-if abs(M2_x1) > self.distance_from_M1_to_M3:
+    6- if abs(M2_x1) > self.distance_from_M1_to_M3:
             M2_x1 = distance_from_M1_to_M3
         it means that we dont let M2 fall off M1 into the hole of M1
     """
@@ -119,7 +119,7 @@ for t in ts:
 
 """When M2 is way heavier than M3 we can see that my Algorithm works flawlessly
     as  M2-x1 and M3_y1 never change and a1 < 0 (as we going toward the opposite the side of X axis
-    ) M1-x1 is decreasing as we going toward the opposite side of X axis and for a dramatic case 
+    ). M1-x1 is decreasing as we going toward the opposite side of X axis and for a dramatic case 
     when t = 15 then M1_x1': -117.3164 that shows we going leftward and have already passed the origin
     """
 for t in [5, 7, 10, 15]:
