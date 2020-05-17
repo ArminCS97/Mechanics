@@ -120,51 +120,51 @@ for t in [0, 1, 2, 3]:
     Rate of DECREASE of M1_x1 and Rate of decrease of M2_x1 depend on a1 and a2 respectively and do 
     depend largely on F magnitude (for this case F <0 as said above)
 """
-
-# code Block number II
-for t in [0, 1, 2, 3]:
-    special_case = Position(t=t, linear_force_function=lambda t2: -100 * t2, M1=10, M2=10, M3=0.5,
-                            s1=0.5,
-                            s2=0.2, s3=0.5, x0_M1=1000, x0_M2=1000,
-                            distance_from_M1_to_M3=distance_from_M1_to_M3)
-    print(special_case.calculate_the_x())
-    print(special_case.calculate_All())
-    print('\n')
-
-"""Like the code block number I we have the same details for all but here F is more negative
-    when F=0 we have {'M1_x1': 1000, 'M2_x1': 1000, 'M3_x1': 2500, 'M3_y1': 1000} and as expected
-    all M1_x1, M2_x2, M3_y1 and M3_x1 decrease because F makes the whole system go toward the
-    opposite side of the X-axis and this makes a force (F1) act on M2 to make it go to right.
-    You may say so M2_x1 must increase as we are going rightward but the fact is that the whole 
-    system goes leftward that is why rate of DECREASE of M1_x1 >> rate of decrease of M2_x1
-"""
-
-# code block number III
-for t in [0, 1, 2, 3]:
-    special_case = Position(t=t, linear_force_function=lambda t2: 4 * t2, M1=10, M2=10, M3=0.5,
-                            s1=0.5,
-                            s2=0.2, s3=0.5, x0_M1=1000, x0_M2=1000,
-                            distance_from_M1_to_M3=distance_from_M1_to_M3)
-    print(special_case.calculate_the_x())
-    print(special_case.calculate_All())
-    print('\n')
-
-"""
-When F is positive but its magnitude is not too big so it cannot pull the system leftward.
-    The whole system goes to the left so M1_x1, M2_x1, M3_x1 and M3_y1 all
-    decrease all together. The reason for this event is some forces like F1 or friction forces that
-    make the system go leftward for small F values
-"""
-
-# code block number 4
-for t in [0, 1, 2, 3]:
-    special_case = Position(t=t, linear_force_function=lambda t2: 100 * t2, M1=10, M2=10, M3=0.5,
-                            s1=0.5,
-                            s2=0.2, s3=0.5, x0_M1=1000, x0_M2=1000,
-                            distance_from_M1_to_M3=distance_from_M1_to_M3)
-    print(special_case.calculate_the_x())
-    print(special_case.calculate_All())
-    print('\n')
+#
+# # code Block number II
+# for t in [0, 1, 2, 3]:
+#     special_case = Position(t=t, linear_force_function=lambda t2: -100 * t2, M1=10, M2=10, M3=0.5,
+#                             s1=0.5,
+#                             s2=0.2, s3=0.5, x0_M1=1000, x0_M2=1000,
+#                             distance_from_M1_to_M3=distance_from_M1_to_M3)
+#     print(special_case.calculate_the_x())
+#     print(special_case.calculate_All())
+#     print('\n')
+#
+# """Like the code block number I we have the same details for all but here F is more negative
+#     when F=0 we have {'M1_x1': 1000, 'M2_x1': 1000, 'M3_x1': 2500, 'M3_y1': 1000} and as expected
+#     all M1_x1, M2_x2, M3_y1 and M3_x1 decrease because F makes the whole system go toward the
+#     opposite side of the X-axis and this makes a force (F1) act on M2 to make it go to right.
+#     You may say so M2_x1 must increase as we are going rightward but the fact is that the whole
+#     system goes leftward that is why rate of DECREASE of M1_x1 >> rate of decrease of M2_x1
+# """
+#
+# # code block number III
+# for t in [0, 1, 2, 3]:
+#     special_case = Position(t=t, linear_force_function=lambda t2: 4 * t2, M1=10, M2=10, M3=0.5,
+#                             s1=0.5,
+#                             s2=0.2, s3=0.5, x0_M1=1000, x0_M2=1000,
+#                             distance_from_M1_to_M3=distance_from_M1_to_M3)
+#     print(special_case.calculate_the_x())
+#     print(special_case.calculate_All())
+#     print('\n')
+#
+# """
+# When F is positive but its magnitude is not too big so it cannot pull the system leftward.
+#     The whole system goes to the left so M1_x1, M2_x1, M3_x1 and M3_y1 all
+#     decrease all together. The reason for this event is some forces like F1 or friction forces that
+#     make the system go leftward for small F values
+# """
+#
+# # code block number 4
+# for t in [0, 1, 2, 3]:
+#     special_case = Position(t=t, linear_force_function=lambda t2: 100 * t2, M1=10, M2=10, M3=0.5,
+#                             s1=0.5,
+#                             s2=0.2, s3=0.5, x0_M1=1000, x0_M2=1000,
+#                             distance_from_M1_to_M3=distance_from_M1_to_M3)
+#     print(special_case.calculate_the_x())
+#     print(special_case.calculate_All())
+#     print('\n')
 
 """When F is positive and very big this is what happens
     As expected the whole system goes to the right and as F is really big it may make M2 fall off 
